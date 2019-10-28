@@ -1,0 +1,122 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Likego"
+DefaultContentLanguage = "en"
+
+theme = "hello-friend-ng"
+
+rssLimit  = 10  # Maximum number of items in the RSS feed.
+copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+
+archetypeDir = "archetypes"
+contentDir   = "content"
+dataDir      = "data"
+layoutDir    = "layouts"
+publishDir   = "public"
+
+buildDrafts  = false
+buildFuture  = false
+buildExpored = false
+canonifyURLs = true
+
+enableRobotsTXT = true
+enableGitInfo   = false
+enableEmoji     = true
+enableMissingTranslationPlaceholders = false
+disableRSS     = false
+disableSitemap = false
+disable404     = false
+disableHugoGeneratorInject = false
+
+[permalinks]
+  posts = "/posts/:year/:month/:title/"
+
+[author]
+  name = "YongKang.H"
+
+[taxonomies]
+  tag      = "tags"
+  series   = "series"
+  category = "categories"
+
+[params]
+  GitHubUser = "superqbb"
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+
+  # Metadata mostly used in document's head
+  description = "A chinese gopher blog "
+  keywords = "homepage, blog, science, informatics, development, programming"
+  images = [""]
+
+  homeSubtitle = "A chinese gopher whose like coding, like work, like life!"
+
+  # Directory name of your blog content (default is `content/posts`)
+  contentTypeName = "posts"
+  # Default theme "light" or "dark"
+  defaultTheme = "light"
+  themeColor = "#252627"
+
+  # Integrate Javascript files or stylesheets by adding the url to the external assets or by
+  # linking local files with their path relative to the static folder, e.g. "css/styles.css"
+  customCSS = []
+  customJS  = []
+
+  # Toggle this option need to rebuild SCSS, requires extended version of Hugo
+  justifyContent = false  # Set "text-align: justify" to .content.
+
+
+  [params.logo]
+    logoText = "$ cd /home/"
+    logoHomeLink = "/"
+    # path = "/static/android-chrome-192x192.png"
+    # alt = "Your example logo alt text"
+
+  # Social icons
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/superqbb"
+
+  [[params.social]]
+    name = "email"
+    url  = "mailto:qbb_520@qq.com"
+
+[languages]
+  [languages.en]
+    title = "Like go"
+    subtitle = "like coding,like working,love life"
+    keywords = "golang programming"
+    copyright = "superqbb"
+    readOtherPosts = "Read other posts"
+
+    # You can create a language based menu
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.en.menu.main]]
+        identifier = "Posts"
+        name = "Posts"
+        url = "/posts"
+      [[languages.en.menu.main]]
+        identifier = "tags"
+        name = "Tags"
+        url = "/tags"
+
+# And you can even create generic menu
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name       = "About"
+    url        = "/about"
+  [[menu.main]]
+    identifier = "posts"
+    name       = "Posts"
+    url        = "/posts"
+  [[menu.main]]
+    identifier = "tags"
+    name       = "Tags"
+    url        = "/tags"
