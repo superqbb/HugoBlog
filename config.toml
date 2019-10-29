@@ -1,4 +1,4 @@
-baseURL = "likego.club/"
+baseURL = "https://likego.club/"
 languageCode = "en-us"
 title = "Likego"
 DefaultContentLanguage = "en"
