@@ -24,6 +24,7 @@ Golang只有25个关键字
 语法简单，上手速度快，由于编程风格的统一，因此在代码review，浏览其他开源的golang项目时，会有非常熟悉的感觉。
 
 ### 2、自动识别变量类型
+
 ``` go
 sum := 10
 str := "hello word"
@@ -53,18 +54,20 @@ func main(){
          fmt.Println("sum is equal to ", sum)
 }
 ```
+
 Golang中没有while关键字，可以使用for进行代替，忽略expression1和expression3：
+
 ```go
 sum := 1
 for sum < 1000 {
      sum += sum
 }
-````
+```
 
 ### 4、Go里面switch默认相当于每个case最后带有break
 Go的switch非常灵活，表达式不必是常量或整数，也可以使用多个逗号分隔的方式匹配多个值，执行的过程从上至下，直到找到匹配项；而如果switch没有表达式，它会匹配true。
 
-```golang
+```go
 i := 10
 switch i/10 {
     case 1:
@@ -77,6 +80,7 @@ switch i/10 {
              fmt.Println("All I know is that i is an integer")
 }
 ```
+
 ### 5、切片slice
 
 ### 6、函数定义func
@@ -90,7 +94,9 @@ func funcName( input1 type1, input2 ...type2) (output1 type1, output2 type2) {
          return value1, value2
 }
 ```
+
 * Go函数支持变参，即入参可以是一个不定参数，可以接受多个不确定数量的参数，比如input2
+
 ```go
 func test1(args ...string) { //可以接受任意个string参数
         for _, v:= range args{
@@ -107,12 +113,14 @@ func main(){
     test1(strss...) //切片被打散传入
 }
 ```
+
 * Go语言比C更先进的特性，其中一点就是函数能够返回多个值
 * 如果没有返回值，那么就直接省略最后的返回信息
 
 ### 7、defer 延迟语句
 Go语言中有种不错的设计，即延迟（defer）语句，你可以在函数中添加多个defer语句。当函数执行到最后时，这些defer语句会按照逆序执行，最后该函数返回。特别是当你在进行一些打开资源的操作时，遇到错误需要提前返回，在返回前你需要关闭相应的资源，不然很容易造成资源泄露等问题。如下代码所示，我们一般写打开一个资源是这样操作的：
-``` go
+
+```go
 func ReadWrite() bool {
          file.Open("file")
          // 做一些工作
@@ -128,6 +136,7 @@ func ReadWrite() bool {
          return true
 }
 ```
+
 我们看到上面有很多重复的代码，如果代码多的时候，还有可能忘记写file.close()。Go的defer有效解决了这个问题。使用它后，不但代码量减少了很多，而且程序变得更优雅。在defer后指定的函数会在函数退出前调用。
 
 **代码使用defer改写如下：**
@@ -148,11 +157,13 @@ func ReadWrite() bool {
          return true
 }
 ```
+
 值得注意的是，defer执行顺序是先进后出。上面的例子，在函数退出之前，会先打印"1st defer"，再执行file.Close()，最后打印"all done"。
 
 ### 8、Panic和Recover
 一般来说，我们应该尽可能地使用错误，而不是使用 panic 和 recover
 一般如果函数执行的异常，会抛出一个error类型的返回参数，我们在函数外部对error进行处理即可。
+
 ``` go
 
 func foo(param int)(ret int, err error)
@@ -181,7 +192,8 @@ panic 有两个合理的用例。
 
 8.1 主动panic
 下面这个函数演示了如何在过程中使用panic
-``` go
+
+```go
 var user = os.Getenv("USER")
 //值得一提的是，golang import一个包后，如果包内有init函数，会自动执行init函数，对包内的资源做一些初始化的工作
 func init() {
@@ -191,11 +203,13 @@ func init() {
          }
 }
 ```
+
 > 顺带一提：main函数引入包初始化流程图
 > ![ff2d32f63b1d99e2fb4880776c6fca4f.png](evernotecid://E7A7D248-3CE7-488F-9872-BF022DF84E81/appyinxiangcom/19184173/ENResource/p48)
 
 8.2 当函数发生 panic 时，它会终止运行，在执行完所有的延迟函数后，程序控制返回到该函数的调用方。
-``` go
+
+```go
 package main
 
 import (  
@@ -222,6 +236,7 @@ func main() {
 }
 
 ```
+
 > 该函数会打印：
 > deferred call in fullName  
 > deferred call in main  
@@ -237,7 +252,8 @@ func main() {
 在延迟函数内调用 recover，可以取到 panic 的错误信息，并且停止 panic 续发事件（Panicking Sequence），程序运行恢复正常。如果在延迟函数的外部调用 recover，就不能停止 panic 续发事件。
 
 下面这个函数检查作为其参数的函数在执行时是否会产生panic：
-``` go
+
+```go
 func throwsPanic(f func()) (b bool) {
          defer func() {
                  if x := recover(); x != nil {
@@ -251,6 +267,7 @@ func throwsPanic(f func()) (b bool) {
 
 ### 9、go语言中面向对象编程
 下面的例子演示了golang中定义对象，定义public、private属性，对象函数的方法
+
 ```go
 package main
 
@@ -292,13 +309,14 @@ func main() {
      sam.SayHi()
 }
 ```
+
 Go里面的面向对象是如此的简单，没有任何的私有、公有关键字，通过大小写来实现(大写开头的为公有，小写开头的为私有)，方法也同样适用这个原则。
 
 ### 10、非侵入式接口
 编译时对“引用”的类和接口定义的依赖，我们称之为“侵入性”的；任何显式的“接口”、“基类”都是侵入性的，不可避免的带来编译期依赖；即使这些依赖很小，但依然有办法而且应该尽可能消除。
 
 java中的实现接口
-![4950c5b68b3ef0249d2daebd916a057f.png](evernotecid://E7A7D248-3CE7-488F-9872-BF022DF84E81/appyinxiangcom/19184173/ENResource/p49)
+![p48-2358709.png](/images/p48-2358709.png)
 
 
 Go语言的接口设计是一种非侵入性的设计，作为服务提供者不用预先知道所需要实现的接口，也不用为了实现某一个接口而import一个专门的包。而接口可以被定义在客户端，按需求定义，同时接口与接口之间也可以相互赋值，这样就不用过多忧心接口的粒度，给接口设计带来了很大的灵活性。
