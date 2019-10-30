@@ -315,9 +315,101 @@ Go里面的面向对象是如此的简单，没有任何的私有、公有关键
 ### 10、非侵入式接口
 编译时对“引用”的类和接口定义的依赖，我们称之为“侵入性”的；任何显式的“接口”、“基类”都是侵入性的，不可避免的带来编译期依赖；即使这些依赖很小，但依然有办法而且应该尽可能消除。
 
-java中的实现接口
+我们先来看看java中的实现接口
+
+```java
+public interface Geometry{
+  public float Area();
+}
+
+public class Rect implements Geometry {
+   ...
+   @override
+   public float Area(){
+     //具体实现
+     ...
+   }
+   
+}
+```
+
+
 
 
 
 Go语言的接口设计是一种非侵入性的设计，作为服务提供者不用预先知道所需要实现的接口，也不用为了实现某一个接口而import一个专门的包。而接口可以被定义在客户端，按需求定义，同时接口与接口之间也可以相互赋值，这样就不用过多忧心接口的粒度，给接口设计带来了很大的灵活性。
-![demo](https://github.com/superqbb/GoCourse/tree/master/Object)
+
+**animal.go**
+
+```go
+package pkg
+
+import "fmt"
+
+type Animal interface{
+	Eat()
+}
+
+type Bird interface {
+	Fly()
+}
+
+//定义Dog时，我们并没有在代码的任何地方告诉Dog或者Pig这两个struct它们需要去实现Animal接口
+type Dog struct {
+	Weight float64
+}
+
+//Dog实现了Eat接口，即认为是Animal
+func(d *Dog) Eat(){
+	fmt.Printf("体重%.1fkg的狗正在进食...\n",d.Weight)
+}
+
+type Pig struct {
+	Weight float64
+}
+
+//Pig实现了Fly接口，即认为是Bird
+func(d *Pig) Fly(){
+	fmt.Printf("体重%.1fkg的猪正在飞...\n",d.Weight)
+}
+
+//Pig实现了Fly接口，即认为是Animal
+func(d *Pig) Eat(){
+	fmt.Printf("体重%.1fkg的猪正在进食...\n",d.Weight)
+}
+```
+
+**main.go**
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/superqbb/GoCourse/Object/pkg"
+)
+
+func Dinner(a pkg.Animal){
+	a.Eat()
+}
+
+func WindCome(b pkg.Bird){
+	b.Fly()
+}
+
+//非侵入式接口演示
+func main(){
+	myDog := &pkg.Dog{Weight:4}
+	myPig := &pkg.Pig{Weight:80}
+
+	//因为Dog,Pig都实现了Animal接口，编译器会自动识别
+	Dinner(myDog)
+	Dinner(myPig)
+
+	fmt.Printf("风来了...\n")
+	WindCome(myPig)
+}
+```
+
+[SourceCode]: https://github.com/superqbb/GoCourse/tree/master/Object	"SourceCode"
+
