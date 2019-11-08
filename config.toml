@@ -51,7 +51,7 @@ disableHugoGeneratorInject = false
   keywords = "homepage, blog, science, informatics, development, programming"
   images = [""]
 
-  homeSubtitle = "A chinese gopher whose like coding, like work, like life!"
+  homeSubtitle = "A chinese gopher whose like coding, like working, like life!"
 
   # Directory name of your blog content (default is `content/posts`)
   contentTypeName = "posts"
